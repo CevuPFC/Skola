@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131b">
+  <title>Moja sveska</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="authView" class="auth-wrap">
+    <section class="auth-card">
+      <div class="brand-mark">✎</div>
+      <p class="eyebrow">LIČNA ŠKOLSKA Sveska</p>
+      <h1>Moja sveska</h1>
+      <p class="muted">Beleške organizovane po predmetima, dostupne na svim tvojim uređajima.</p>
+      <div id="setupWarning" class="notice hidden">
+        Pre korišćenja unesi Firebase podešavanja u fajl <code>app.js</code>. Pogledaj <code>README.md</code>.
+      </div>
+      <label for="email">Imejl adresa</label>
+      <input id="email" type="email" autocomplete="email" placeholder="ti@primer.com">
+      <label for="password">Lozinka</label>
+      <input id="password" type="password" autocomplete="current-password" placeholder="Najmanje 6 znakova">
+      <div class="auth-actions">
+        <button id="loginBtn" class="primary">Prijavi se</button>
+        <button id="registerBtn" class="secondary">Napravi nalog</button>
+      </div>
+      <p id="authMessage" class="status" role="status"></p>
+      <p class="tiny muted">Nalog je ličan. Ne deli lozinku ni sa kim.</p>
+    </section>
+  </div>
+
+  <div id="appView" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark small">✎</span><span>Moja sveska</span></div>
+      <button id="newNoteBtn" class="primary full">＋ Nova beleška</button>
+      <div class="side-heading">PREDMETI</div>
+      <nav id="subjectList" class="subject-list"></nav>
+      <button id="addSubjectBtn" class="text-button">＋ Dodaj predmet</button>
+      <div class="sidebar-bottom">
+        <div id="userEmail" class="tiny muted"></div>
+        <button id="logoutBtn" class="text-button">Odjavi se</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="mobile-brand">✎ Moja sveska</div>
+        <div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Pretraži beleške…"></div>
+        <div id="syncStatus" class="sync-status"><span class="sync-dot"></span> Povezivanje…</div>
+      </header>
+
+      <section id="welcomeView" class="welcome">
+        <div class="welcome-icon">✦</div>
+        <p class="eyebrow">TVOJ DIGITALNI PROSTOR</p>
+        <h1>Sve tvoje beleške,<br><span>na jednom mestu.</span></h1>
+        <p class="muted">Izaberi predmet ili napravi prvu belešku. Promene se automatski čuvaju u tvom nalogu.</p>
+        <button id="welcomeNewBtn" class="primary">＋ Napravi prvu belešku</button>
+        <div class="feature-row">
+          <div><b>01</b><span>Organizuj po predmetima</span></div>
+          <div><b>02</b><span>Uredi tekst kao u Wordu</span></div>
+          <div><b>03</b><span>Sinhronizuj uređaje</span></div>
+        </div>
+      </section>
+
+      <section id="editorView" class="editor-layout hidden">
+        <div class="editor-header">
+          <div class="breadcrumbs"><span id="crumbSubject">Predmet</span><span> / </span><span>Beleška</span></div>
+          <div class="editor-actions">
+            <button id="exportBtn" class="secondary small-btn">Izvezi .txt</button>
+            <button id="deleteNoteBtn" class="danger small-btn">Obriši</button>
+          </div>
+        </div>
+        <input id="noteTitle" class="title-input" placeholder="Naslov beleške…" maxlength="160">
+        <div class="format-toolbar" role="toolbar" aria-label="Formatiranje teksta">
+          <button data-command="bold" title="Podebljano"><b>B</b></button>
+          <button data-command="italic" title="Kurziv"><i>I</i></button>
+          <button data-command="underline" title="Podvučeno"><u>U</u></button>
+          <span class="toolbar-divider"></span>
+          <button data-command="insertUnorderedList" title="Lista">• Lista</button>
+          <button data-command="insertOrderedList" title="Numerisana lista">1. Lista</button>
+          <span class="toolbar-divider"></span>
+          <button data-command="formatBlock" data-value="h2" title="Naslov">H2</button>
+          <button data-command="formatBlock" data-value="p" title="Običan tekst">¶</button>
+        </div>
+        <div id="noteBody" class="note-body" contenteditable="true" spellcheck="true" data-placeholder="Počni da pišeš beleške ovde…"></div>
+        <footer class="editor-footer"><span id="wordCount">0 reči</span><span id="lastSaved">Izmene se automatski čuvaju</span></footer>
+      </section>
+
+      <section id="listView" class="list-view hidden">
+        <div class="list-heading"><div><p class="eyebrow">PREDMET</p><h1 id="listTitle">Sve beleške</h1></div><button id="listNewBtn" class="primary">＋ Nova beleška</button></div>
+        <div id="notesGrid" class="notes-grid"></div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
