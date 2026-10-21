@@ -1,11 +1,10 @@
-// 1) Otvori Firebase konzolu i zameni vrednosti ispod svojim Firebase web config podacima.
 const firebaseConfig = {
-    apiKey: "AIzaSyAW0FdDUrADjtQgpEMh3KJnMIKCboB_Sg0",
-    authDomain: "skola-8b5ca.firebaseapp.com",
-    projectId: "skola-8b5ca",
-    storageBucket: "skola-8b5ca.firebasestorage.app",
-    messagingSenderId: "1025473511419",
-    appId: "1:1025473511419:web:ae37d3134fcf2d1be8155e"
+  apiKey: "AIzaSyAW0FdDUrADjtQgpEMh3KJnMIKCboB_Sg0",
+  authDomain: "skola-8b5ca.firebaseapp.com",
+  projectId: "skola-8b5ca",
+  storageBucket: "skola-8b5ca.firebasestorage.app",
+  messagingSenderId: "1025473511419",
+  appId: "1:1025473511419:web:ae37d3134fcf2d1be8155e"
 };
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
@@ -253,3 +252,19 @@ if (isConfigured) {
     setAuthMessage("Firebase podešavanja nisu ispravna: " + e.message);
   }
 }
+
+async function deleteCurrentSubject() {
+  const subject = subjects.find(s => s.id === activeSubject);
+  if (!subject) return;
+  const count = subjectNotes(subject.id).length;
+  const msg = `Obrisati predmet "${subject.name}"` + (count ? ` i njegove beleške (${count})?` : "?");
+  if (!confirm(msg)) return;
+  try {
+    for (const n of subjectNotes(subject.id)) {
+      await deleteDoc(doc(db, "users", currentUser.uid, "notes", n.id));
+    }
+    await deleteDoc(doc(db, "users", currentUser.uid, "subjects", subject.id));
+    activeSubject = null; activeNoteId = null; showOnly("welcomeView");
+  } catch (e) { alert("Brisanje nije uspelo: " + e.message); }
+}
+$("deleteSubjectBtn").addEventListener("click", deleteCurrentSubject);
